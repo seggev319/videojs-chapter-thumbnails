@@ -1,3 +1,4 @@
+/* eslint-disable no-alert, no-console */
 /* global videojs */
 
 import './videojs-chapter-thumbnail.scss';
@@ -9,6 +10,18 @@ const {
   CHAPTER_THUMBNAIL_MENU_BUTTON_NAME,
   ChapterThumbnailMenuButton,
 } = MenuChapterThumbnailMenuButton;
+
+let videojs2;
+if (videojs === undefined) {
+  try {
+    // eslint-disable-next-line global-require, max-len
+    videojs2 = (window && window.videojs) || (global && global.videojs) || require('video.js');
+
+    videojs = videojs2; // eslint-disable-line no-global-assign
+  } catch (e) {
+    throw new Error(`Could not find video.js:\n${e.message}`);
+  }
+}
 
 /**
  * @name Chapters Plugin
